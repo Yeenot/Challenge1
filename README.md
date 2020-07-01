@@ -16,7 +16,7 @@
   - [6.1. File structure](#61-assets)
   - [6.2. Naming](#62-naming)
 - [7. Don't repeat yourself (DRY)](#7-dont-repeat-yourself)
-- [8. General rules](#8general-rules)
+- [8. General rules](#8-general-rules)
 
 # 1. Visual Studio Code Packages
 Install the following packages
@@ -53,7 +53,7 @@ Install the following packages
 - **Public** - `templates/public`
 
 # 3. Action classes pattern
-Use action classes for bussiness logic codes rather than controllers.
+Use action classes for bussiness logic codes rather than controllers.  
 path: `app\Services\{ModuleName}`
 
 Example:
