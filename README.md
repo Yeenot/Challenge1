@@ -15,14 +15,16 @@ HTTP defines a bunch of meaningful status codes that can be returned from your A
 | **204 No Content** | The server has successfully fulfilled the request and that there is no additional content to send in the response payload body. |
 | **304 Not Modified** | A conditional GET or HEAD request has been received and would have resulted in a 200 OK response if it were not for the fact that the condition evaluated to false. |
 | **400 Bad Request** | The server cannot or will not process the request due to something that is perceived to be a client error (e.g., malformed request syntax, invalid request message framing, or deceptive request routing). |
-| **401 Unauthorized** | The request has not been applied because it lacks valid authentication credentials for the target resource. |
-| **403 Forbidden** | The server understood the request but refuses to authorize it. |
-| **404 Not Found** | The origin server did not find a current representation for the target resource or is not willing to disclose that one exists. |
+| **401 Unauthorized** | The request has not been applied because it lacks valid authentication credentials for the target resource. | "Authentication credentials were missing or incorrect" |
+| **403 Forbidden** | The server understood the request but refuses to authorize it. | "The request is understood, but it has been refused or access is not allowed" |
+| **404 Not Found** | The origin server did not find a current representation for the target resource or is not willing to disclose that one exists. | "Data not found" |
 | **405 Method Not Allowed** | The method received in the request-line is known by the origin server but not supported by the target resource. |
 | **410 Gone** | The target resource is no longer available at the origin server and that this condition is likely to be permanent. |
 | **415 Unsupported Media Type** | The origin server is refusing to service the request because the payload is in a format not supported by this method on the target resource. |
 | **422 Unprocessable Entity** | The server understands the content type of the request entity (hence a 415 Unsupported Media Type status code is inappropriate), and the syntax of the request entity is correct (thus a 400 Bad Request status code is inappropriate) but was unable to process the contained instructions. |
-| **429 Too Many Requests** | The user has sent too many requests in a given amount of time ("rate limiting"). |
+| **429 Too Many Requests** | The user has sent too many requests in a given amount of time ("rate limiting"). | "The request cannot be served due to the rate limit having been exhausted for the resource" |
+| **500 Internal Server Error** | The server encountered an unexpected condition that prevented it from fulfilling the request. | "Something is broken"
+| **503 Service Unavailable** | The server is currently unable to handle the request due to a temporary overload or scheduled maintenance, which will likely be alleviated after some delay. | "The server is up, but overloaded with requests. Try again later!"
 
 # Response Format
 
