@@ -13,7 +13,7 @@ Set `Accept` to `application/json` in order to return data as a JSON format.
 |------|-----|------|
 | Noun instead of verb | /getUser/55 | /users/55 |
 | Resource hierarchy | /orders?user=55 | /users/55/orders |
-| Proper grammar (singular, plural) | /users/55/address | /users/55/address |
+| Proper grammar (singular, plural) | /users/55/addresses | /users/55/address |
 
 # HTTP Status Codes 
 HTTP defines a bunch of meaningful status codes that can be returned from your API. These can be leveraged to help the API consumers route their responses accordingly. I've curated a short list of the ones that you definitely should be using:
