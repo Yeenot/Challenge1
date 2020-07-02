@@ -1,155 +1,102 @@
-# Guidelines
+# API Guidelines <!-- omit in toc -->
 
-- [1. Visual Studio Code Packages](#1-visual-studio-code-packages)
-- [2. File structure](#2-coding-specifications)
-  - [2.1. Controllers](#21-controllers)
-  - [2.2. Javascript](#22-javascript)
-  - [2.3. Assets](#23-assets)
-  - [2.4. Lang](#24-lang)
-  - [2.5. Views](#25-views)
-- [3. Action classes pattern](#3-action-classes-pattern)
-- [4. Form requests](#4-form-requests)
-- [5. Models](#5-form-requests)
-  - [5.1. Scopes](#51-controllers)
-  - [5.2. Relationships](#52-javascript)
-- [6. Routes](#6-routes)
-  - [6.1. File structure](#61-assets)
-  - [6.2. Naming](#62-naming)
-- [7. Don't repeat yourself (DRY)](#7-dont-repeat-yourself)
-- [8. General rules](#8-general-rules)
+- [HTTP Status Codes](#http-status-codes)
+- [Response format](#response-format)
+  - [Success](#success)
+  - [Error](#error)
 
-# 1. Visual Studio Code Packages
-Install the following packages
- - php-cs-fixer
- - PHP Intelephense
- - ESLint
- - Prettier
- - GitLens
- - PHP DocBlocker
+# HTTP Status Codes 
+HTTP defines a bunch of meaningful status codes that can be returned from your API. These can be leveraged to help the API consumers route their responses accordingly. I've curated a short list of the ones that you definitely should be using:
 
-# 2. File structure
+| Status Code | Meaning | Message |
+|-------------|---------|---------|
+| **200 OK** | The request has succeeded.|
+| **201 Created** | The request has been fulfilled and has resulted in one or more new resources being created. |
+| **204 No Content** | The server has successfully fulfilled the request and that there is no additional content to send in the response payload body. |
+| **304 Not Modified** | A conditional GET or HEAD request has been received and would have resulted in a 200 OK response if it were not for the fact that the condition evaluated to false. |
+| **400 Bad Request** | The server cannot or will not process the request due to something that is perceived to be a client error (e.g., malformed request syntax, invalid request message framing, or deceptive request routing). |
+| **401 Unauthorized** | The request has not been applied because it lacks valid authentication credentials for the target resource. |
+| **403 Forbidden** | The server understood the request but refuses to authorize it. |
+| **404 Not Found** | The origin server did not find a current representation for the target resource or is not willing to disclose that one exists. |
+| **405 Method Not Allowed** | The method received in the request-line is known by the origin server but not supported by the target resource. |
+| **410 Gone** | The target resource is no longer available at the origin server and that this condition is likely to be permanent. |
+| **415 Unsupported Media Type** | The origin server is refusing to service the request because the payload is in a format not supported by this method on the target resource. |
+| **422 Unprocessable Entity** | The server understands the content type of the request entity (hence a 415 Unsupported Media Type status code is inappropriate), and the syntax of the request entity is correct (thus a 400 Bad Request status code is inappropriate) but was unable to process the contained instructions. |
+| **429 Too Many Requests** | The user has sent too many requests in a given amount of time ("rate limiting"). |
 
-## 2.1 Controllers
-- **Staff**- `app\Http\Controllers\Staff\{ModuleName}`
-- **Public**- `app\Http\Controllers\Public`
-- **Ajax**- `app\Http\Controllers\Ajax`
-- **API**- `app\Http\Controllers\API`
+# Response Format
 
-## 2.2 Javascript
-- **Staff** - `resources/js/staff/{module-name}`
-- **Public** - `resources/js/public`
-   - `resources/js/staff/countries`
+## Success 
 
-## 2.3 Assets
-- **Staff** - `resources/assets/staff/{module-name}`
-- **Public** - `resources/assets/public`
-
-## 2.4 Lang
-- **Staff** - `resources/lang/en/staff`
-- **Public** - `resources/lang/en/public`
-
-## 2.5 Views
-- **Staff** - `templates/staff/{module-name}`
-- **Public** - `templates/public`
-
-# 3. Action classes pattern
-Use action classes for bussiness logic codes rather than controllers.  
-path: `app\Services\{ModuleName}`
-
-Example:
+1. **GET** - **Resource** - a single record
 ```
-class GetUserByEmail 
 {
-    /**
-     * Get user by email
-     *
-     * @param string $email
-     * @return App\Models\User
-     */
-    public function execute(string $email)
-    {
-        return User::where('email', $email)->first();
+    "data": {
+        "id": 1,
+        "code": "TH",
+        "name": "Thailand",
+        "status": "enabled"
     }
 }
 ```
 
-# 4. Form requests
-Use form request instead of validating per controller methods.
-path: `app\Http\Requests\{ModuleName}`
-- 1 form request per item (create/update)
-- Messages should be translated
-
-Example:
+2. **GET** - **Collection** - a group of records
 ```
-class GetUserByEmail 
 {
-    /**
-     * Get user by email
-     *
-     * @param string $email
-     * @return App\Models\User
-     */
-    public function execute(string $email)
-    {
-        return User::where('email', $email)->first();
+    "data": [
+        {
+            "id": 1,
+            "code": "TH",
+            "name": "Thailand",
+            "status": "enabled"
+        },
+        {
+            "id": 2,
+            "code": "PH",
+            "name": "Philippines",
+            "status": "enabled"
+        }
+    ]
+}
+```
+
+3. **POST/UPDATE** - create/update a record
+```
+{
+    "message": "Successfully created/updated"
+    "data": {
+        "id": 1,
+        "code": "TH",
+        "name": "Thailand",
+        "status": "enabled"
     }
 }
 ```
 
-# 5. Models
-
-## 5.1 Scopes
-Use scopes for reusability
+4. **DELETE** - deleted a record
 ```
-public function scopeActive($q)
 {
-    return $q->where('is_active', 1);
+    "message": "Successfully deleted",
+    "data": {}
 }
 ```
 
-## 5.2 Relationships
-- names should be descriptive
-- proper grammer
-  - `one-to-one` - singular
-  - `one-to-many` - plural
-
-# 6. Routes
-
-## 6.1 File structure
-Proper segregation of route files
-- `routes/staff.php`
-- `routes/staff_ajax.php`
-- `routes/public.php`
-- `routes/public_ajax.php`
-- `routes/api.php`
-
-## 6.2 Naming
-Example:
-```Route::get('/group-companies', 'GroupCompanyController@index')->name('staff.group_companies.index')```
-- public-facing urls must use kebab-case
-- use `.` as a group separator
-- use `_` as a name separator
-
-# 7. Don't repeat yourself (DRY)
-A class and a method should have only one responsibility so that it is readable and helps us to avoid code duplication.
+## Error
 
 ```
-public function getArticles()
 {
-    return $this->whereHas('user', function ($q) {
-            $q->active();
-        })->get();
+    "message": "The given data was invalid.",
+    "errors": {
+        "name": [
+            "The name field is required."
+        ],
+        "email": [
+            "The email field is required."
+        ],
+        "message": [
+            "The message field is required."
+        ]
+    }
 }
 ```
-
-# 8. General rules
-- Proper indentions (per ***4 spaces***)
-- Proper whitespace between codes
-- Proper singular/plural naming
-- Remove unused codes
-- Comment your codes using ***Docblock***
-- File/class names should be ***DESCRIPTIVE***
-- Method names should be ***DESCRIPTIVE***
-- All static texts/labels ***MUST*** be always translated
-- ***DO NOT*** put logical codes in controllers, blades, and helpers
 
