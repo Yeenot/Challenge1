@@ -23,8 +23,8 @@ HTTP defines a bunch of meaningful status codes that can be returned from your A
 | **415 Unsupported Media Type** | The origin server is refusing to service the request because the payload is in a format not supported by this method on the target resource. |
 | **422 Unprocessable Entity** | The server understands the content type of the request entity (hence a 415 Unsupported Media Type status code is inappropriate), and the syntax of the request entity is correct (thus a 400 Bad Request status code is inappropriate) but was unable to process the contained instructions. |
 | **429 Too Many Requests** | The user has sent too many requests in a given amount of time ("rate limiting"). | "The request cannot be served due to the rate limit having been exhausted for the resource" |
-| **500 Internal Server Error** | The server encountered an unexpected condition that prevented it from fulfilling the request. | "Something is broken"
-| **503 Service Unavailable** | The server is currently unable to handle the request due to a temporary overload or scheduled maintenance, which will likely be alleviated after some delay. | "The server is up, but overloaded with requests. Try again later!"
+| **500 Internal Server Error** | The server encountered an unexpected condition that prevented it from fulfilling the request. | "Something is broken" |
+| **503 Service Unavailable** | The server is currently unable to handle the request due to a temporary overload or scheduled maintenance, which will likely be alleviated after some delay. | "The server is up, but overloaded with requests. Try again later!" |
 
 # Response Format
 
