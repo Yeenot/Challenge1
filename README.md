@@ -1,5 +1,7 @@
 # API Guidelines <!-- omit in toc -->
 
+- [HTTP Header](#http-header)
+- [Naming](#naming)
 - [HTTP Status Codes](#http-status-codes)
 - [Response format](#response-format)
   - [Success](#success)
